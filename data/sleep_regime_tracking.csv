@@ -1,0 +1,7 @@
+Date,TypeOfSleep,TimeIWentToSleep,TimeIWokeUp,TotalAmountOfTime,AnyScreenTimeBefore,TimeScreenTime,HowGoodIFeelAfter,HowBadIFeel,AlarmUsed,TemperatureInRoom
+"2026-10-08","Interrupted sleep","00:08","04:44","04:36:41",true,"34:12",1,0,false,"warm"
+"2026-10-08","Catch-up sleep","05:12","09:01","02:49:22",false,"00:00",0,2,true,"moderate"
+"2026-10-09","Nap","12:42","15:01","02:19:36",false,"00:00",0,2,true,"moderate"
+"2026-10-10","Sleep","03:52","12:05","08:10:21",true,"02:07:32",1,0,false,"moderate"
+"2026-10-11","Sleep","03:15","10:06","06:50:49",true,02:11:28,2,0,false,"cool"
+"2026-10-12","Sleep","03:02","06:33","03:31:22",true,"01:35:19",0,1,false,"cool"
