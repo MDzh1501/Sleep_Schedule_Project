@@ -5,5 +5,9 @@ void setup() {
 
 void draw() {
     TimeLine timeline = new TimeLine();
-    timeline.drawTimeLine();
+    timeline.drawLeftTimeLine();
+    timeline.drawRightTimeLine();
+    timeline.printHashMap();
+    
+    frameRate(0);
 }
