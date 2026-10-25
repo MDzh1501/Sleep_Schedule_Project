@@ -1,10 +1,13 @@
 Table table;
+ArrayList<NewArrow> arrows;
 
 void setup() {
     size(1700, 1008);
     background(250);
+    rectMode(CENTER);
 
-    table = loadTable("data/sleep_regime_tracking.csv", "header");
+    table = getTable();
+    arrows = initArrows(table);
 }
 
 void draw() {
@@ -14,12 +17,13 @@ void draw() {
     timeline.printHashMap();
 
     strokeWeight(1);
-    
 
-    SleepArrowCreator sac = new SleepArrowCreator();
-    PShape newSquare = createShape(RECT, 0, 0, 85, 85);
-    color endsColor = color(120, 80, 10);
-    sac.createArrow(100, 100, 100, 550, endsColor, newSquare, true);
+
+    // SleepArrowIllustrator sac = new SleepArrowIllustrator();
+    // PShape newSquare = createShape(RECT, 0, 0, 50, 50);
+    // // PShape newTriangle = getNewShape("triangle");
+    // color endsColor = color(120, 80, 10);
+    // sac.createArrow(115, 0, 115, 550, endsColor, newSquare, true);
     
     frameRate(0);
 }
