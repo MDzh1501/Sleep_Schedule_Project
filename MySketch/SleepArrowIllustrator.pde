@@ -2,20 +2,32 @@ class SleepArrowIllustrator {
     SleepArrowIllustrator() {}
 
     void drawArrow(NewArrow arrow, HashMap<String, Float> timeToY) {
+        println("Sleep start: " + arrow.timeIWentToSleep);
+        println("Wake up: " + arrow.timeIWokeUp);
+        println("Screen time: " + arrow.timeScreenTime);
+        println("Other activities: " + arrow.timeSpentOnOtherActivities);
+
+        println(timeToY.containsKey(arrow.timeIWentToSleep));
+        println(timeToY.containsKey(arrow.timeIWokeUp));
+        println(timeToY.containsKey(arrow.timeScreenTime));
+        println(timeToY.containsKey(arrow.timeSpentOnOtherActivities));
         float x = random(150, width - 150);
+        println(arrow.timeIWentToSleep, timeToY.get(arrow.timeIWentToSleep));
+        print(arrow.timeIWentToSleep == arrow.timeIWentToSleep);
         float startY = timeToY.get(arrow.timeIWentToSleep);
         float endY = timeToY.get(arrow.timeIWokeUp);
         float totalScreenY = timeToY.get(arrow.timeScreenTime);
         float timeSpentOnOtherY = timeToY.get(arrow.timeSpentOnOtherActivities);
-        String date = arrow.date;
-        String totalSleep = arrow.totalAmountOfSleep;
+        // String date = arrow.date;
+        String typeOfSleep = arrow.typeOfSleep;
+        // String totalSleep = arrow.totalAmountOfSleep;
         String temperature = arrow.temperature;
         boolean anyScreen = arrow.anyScreenTimeBefore;
         boolean alarmUsed = arrow.alarmUsed;
         int ratingGood = arrow.howGoodIFeel;
         int ratingBad = arrow.howBadIFeel;
         PVector vector;
-        color vecColor;
+        color vecColor, shapeColor;
 
         // Drawing part
         // 1. Draw illustrations for TimeScreenTime and TimeSpentOnOtherActivities
@@ -47,12 +59,77 @@ class SleepArrowIllustrator {
                 vecColor = color(241, 241, 193);
         }
         stroke(vecColor);
-        // if (arrow.timeIWentToSleep )
+        // Splititng time strings, e.g. 08:17 into separate lists when I went to bed and when I woke up, respectively
+        String[] asleep = split(arrow.timeIWentToSleep, ":");
+        // Type casting elements recieved from string literals to integers (looked up on Google)
+        int hour_asleep = Integer.parseInt(asleep[0]);
+        int min_asleep = Integer.parseInt(asleep[1]);
 
+        String[] wokeUp = split(arrow.timeIWokeUp, ":");
+        int hour_woke = Integer.parseInt(wokeUp[0]);
+        int min_woke = Integer.parseInt(wokeUp[1]);
 
-        // 3. Create all settings and attributes for the endpoint. Part when we will create it        
+        // Calculating minutes 
+        int start_minutes = hour_asleep * 60 + min_asleep;
+        int end_minutes = hour_woke * 60 + min_woke;
 
+        // Scheme goes like this: if I went to sleep before noon (e.g. 02:12 => less than 720 minutes) and woke up after it (e.g. 12:12 => more than 720),
+        // then draw the line till "12:00" y-coordinates without endpoint, 
+        // and start drawing another vector "on top" of the previous from "12:01"
+        if (start_minutes < 720 && end_minutes > 720) {
+            vector = new PVector(startY, timeToY.get("12:0"));
+            line(x, vector.x, x, vector.y);
+            vector = new PVector(timeToY.get("12:1"), endY);
+            line(x, vector.x, x, vector.y);
+            // Add a tracing line (left-to-right) that will point visually exact time where it stopped
+            strokeWeight(1);
+            line(x, vector.y, width, vector.y);
+        } else {
+            vector = new PVector(startY, endY);
+            line(x, vector.x, x, vector.y);
+            strokeWeight(1);
+            if (start_minutes > 720 && end_minutes > 720)
+                line(x, vector.y, width, vector.y);
+            else
+                line(x, vector.y, 0, vector.y); // Tracing line, but right-to-left
+        }
 
+        // 3. Create all settings and attributes for the endpoint. Draw it after.
+        strokeWeight(3);
+        switch (ratingGood - ratingBad) {
+            case 2:
+                shapeColor = color(0, 102, 0);
+                break;
+            case 1:
+                shapeColor = color(143, 239, 143);
+                break;
+            case -1:
+                shapeColor = color(115, 115, 115);
+                break;
+            case -2:
+                shapeColor = color(0);
+                break;
+            default:
+                shapeColor = color(255);
+        }
+        if (alarmUsed) 
+            stroke(77, 255, 77);
+        else
+            stroke(255, 0, 0);
+        fill(shapeColor);
+        switch (typeOfSleep) {
+            case "Interrupted sleep":
+                rect(x, vector.y, 50, 50);
+                break;
+            case "Catch-up sleep":
+                rect(x, vector.y, 50, 50, 15);
+                break;
+            case "Nap":
+                ellipse(x, vector.y, 100, 65);
+                break;
+            default:
+                circle(x, vector.y, 45);
+        }
     }
     // void createArrow(float startX, float startY, float endX, float endY, color c, PShape endsShape, boolean alarm) {
     //     PVector vector1, vector2;

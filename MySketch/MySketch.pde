@@ -19,7 +19,12 @@ void draw() {
     strokeWeight(1);
 
 
-    // SleepArrowIllustrator sac = new SleepArrowIllustrator();
+    SleepArrowIllustrator sac = new SleepArrowIllustrator();
+    ArrayList<NewArrow> arrows = initArrows(table);
+    
+    for (NewArrow arrow : arrows) {
+        sac.drawArrow(arrow, timeline.timeToY);
+    }
     // PShape newSquare = createShape(RECT, 0, 0, 50, 50);
     // // PShape newTriangle = getNewShape("triangle");
     // color endsColor = color(120, 80, 10);

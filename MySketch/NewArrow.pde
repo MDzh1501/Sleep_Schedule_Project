@@ -4,6 +4,8 @@ class NewArrow {
     int howGoodIFeel, howBadIFeel;
     
     NewArrow() {} 
+
+    
 }
 
 ArrayList<NewArrow> initArrows(Table table) {
@@ -15,6 +17,7 @@ ArrayList<NewArrow> initArrows(Table table) {
         arrow.date = row.getString("Date");
         arrow.typeOfSleep = row.getString("TypeOfSleep");
         arrow.timeIWentToSleep = row.getString("TimeIWentToSleep");
+        println(arrow.timeIWentToSleep);
         arrow.timeIWokeUp = row.getString("TimeIWokeUp");
         arrow.totalAmountOfSleep = row.getString("TotalAmountOfTime");
         arrow.timeScreenTime = row.getString("TimeScreenTime");
@@ -31,3 +34,12 @@ ArrayList<NewArrow> initArrows(Table table) {
     }
     return arrows;
 };
+
+// void mouseClicked() {
+//     for (NewArrow arrow : arrows) {
+//         if (arrow.isMouseOver()) {
+//             arrow.onClick();
+//             break;
+//         }
+//     }
+// }
